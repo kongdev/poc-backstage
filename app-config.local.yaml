@@ -51,3 +51,15 @@ catalog:
       target: ../../examples/org.yaml
       rules:
         - allow: [User, Group]
+kubernetes:
+  serviceLocatorMethod:
+    type: multiTenant
+  clusterLocatorMethods:
+    - type: config
+      clusters:
+        - url: ${K8S_MINIKUBE_URL}
+          name: minikube
+          authProvider: serviceAccount
+          skipTLSVerify: true
+          skipMetricsLookup: false
+          serviceAccountToken: ${K8S_MINIKUBE_TOKEN}
