@@ -63,3 +63,15 @@ kubernetes:
           skipTLSVerify: true
           skipMetricsLookup: false
           serviceAccountToken: ${K8S_MINIKUBE_TOKEN}
+auth:
+  environment: development
+  session:
+    secret: ${AUTH_SESSION_SECRET}
+  providers:
+    keycloak:
+      development:
+        clientId: ${KC_CLIENT_ID}
+        clientSecret: ${KC_CLIENT_SECRET}
+        metadataUrl: ${KC_URL_CONFIG}
+        prompt: auto
+        
