@@ -44,13 +44,13 @@ export const apis: AnyApiFactory[] = [
           icon: () => null,
         },
         environment: configApi.getOptionalString('auth.environment'),
-        defaultScopes: ['openid','email'],
+        defaultScopes: ['openid','email','profile'],
         popupOptions: {
           size: {
-            fullscreen: true,
+            // fullscreen: true,
             // or specify popup width and height
-            // width: 1000,
-            // height: 1000,
+            width: 600,
+            height: 600,
           },
         },
       }),

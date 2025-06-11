@@ -1,0 +1,48 @@
+# group.yaml
+apiVersion: backstage.io/v1alpha1
+kind: Group
+metadata:
+  name: dev
+  description: The developer group
+  namespace: default
+spec:
+  type: team
+  profile:
+    displayName: kongdev Team 55555
+    email: dev@team.com
+  children: [] # ถ้ามี subgroup ให้ใส่ชื่อที่นี่
+  members:
+    - user:default/kongdev
+    - user:default/vvip
+---
+apiVersion: backstage.io/v1alpha1
+kind: User
+metadata:
+  name: kongdev
+  namespace: default
+spec:
+  profile:
+    displayName: kong dev
+    email: vasin.nopaket@kingpower.com
+  memberOf:
+    - group:default/dev
+  annotations:
+    backstage.io/managed-by-origin: keycloak
+    backstage.io/user-email: vasin.nopaket@kingpower.com
+    backstage.io/user-id: kongdev
+---
+apiVersion: backstage.io/v1alpha1
+kind: User
+metadata:
+  name: vvip
+  namespace: default
+spec:
+  profile:
+    displayName: vvip vip
+    email: vvip@kingpower.com
+  memberOf:
+    - group:default/dev
+  annotations:
+    backstage.io/managed-by-origin: keycloak
+    backstage.io/user-email: vvip@kingpower.com
+    backstage.io/user-id: vvip

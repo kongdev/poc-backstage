@@ -1,0 +1,20 @@
+services:
+  keycloak-dashbaord:
+    image: quay.io/keycloak/keycloak:21.1.1
+    environment:
+      KC_HOSTNAME: localhost
+      KC_HOSTNAME_PORT: 8899
+      KC_HOSTNAME_STRICT_BACKCHANNEL: "true"
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+      KC_HEALTH_ENABLED: "true"
+      KC_LOG_LEVEL: info
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8899/health/ready"]
+      interval: 15s
+      timeout: 2s
+      retries: 15
+    command: ["start-dev", "--http-port", "8899", "--https-port", "8443"]
+    ports:
+      - "8899:8899"
+      - "8443:8443"

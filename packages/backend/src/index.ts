@@ -39,13 +39,20 @@ const myAuthProviderModule = createBackendModule({
             async signInResolver(info, ctx) {
               const userRef = stringifyEntityRef({
                 kind: 'User',
-                name: info?.result.fullProfile.userinfo.name as string,
+                name: info?.result.fullProfile.userinfo
+                  .preferred_username as string,
                 namespace: DEFAULT_NAMESPACE,
               });
+              console.log('userInfoResult :', info?.result);
+              console.log(
+                'user_group_jwt :',
+                info?.result.fullProfile.userinfo?.user_group_jwt,
+              );
+              console.log('userRef :', userRef);
               return ctx.issueToken({
                 claims: {
                   sub: userRef, // The user's own identity
-                  ent: [userRef], // A list of identities that the user claims ownership through
+                  ent: [userRef, 'a', 'b', 'c'], // A list of identities that the user claims ownership through
                 },
               });
             },
@@ -82,9 +89,7 @@ backend.add(import('@backstage/plugin-catalog-backend-module-logs'));
 // permission plugin
 backend.add(import('@backstage/plugin-permission-backend'));
 // See https://backstage.io/docs/permissions/getting-started for how to create your own permission policy
-backend.add(
-  import('@backstage/plugin-permission-backend-module-allow-all-policy'),
-);
+backend.add(import('./plugins/permissionsPolicy'));
 
 // search plugin
 backend.add(import('@backstage/plugin-search-backend'));
