@@ -4,6 +4,9 @@ app:
 organization:
   name: My yyyy
 
+permission:
+  enabled: true
+
 backend:
   # This is for local development only, it is not recommended to use this in production
   # The production database configuration is stored in app-config.production.yaml
@@ -38,15 +41,38 @@ catalog:
       target: ../../examples/template/template.yaml
       rules:
         - allow: [Template]
-    - type: url
-      target: https://github.com/kongdev/poc-software-templates/blob/main/github-pages-site/template.yaml
-      rules:
-        - allow: [Template]      
-    - type: url
-      target: https://github.com/backstage/software-templates/blob/main/scaffolder-templates/react-ssr-template/template.yaml
+    - type: file
+      target: ../../examples/template/exam1.yaml
       rules:
         - allow: [Template]
+    - type: file
+      target: ../../examples/template/exam2.yaml
+      rules:
+        - allow: [Template]
+    # Local example User Group
+    - type: file
+      target: ../../examples/group.yaml
+      rules:
+        - allow: [User, Group]
+    # URL
+    # - type: url
+    #   target: https://github.com/backstage/backstage/blob/master/packages/catalog-model/examples/acme/backstage-group.yaml
+    #   rules:
+    #     - allow: [Group]
+
+    # - type: url
+    #   target: https://github.com/kongdev/poc-software-templates/blob/main/github-pages-site/template.yaml
+    #   rules:
+    #     - allow: [Template]
+    # - type: url
+    #   target: https://github.com/backstage/software-templates/blob/main/scaffolder-templates/react-ssr-template/template.yaml
+    #   rules:
+    #     - allow: [Template]
     # Local example organizational data
+    # - type: url
+    #   target: https://github.com/backstage/backstage/blob/master/packages/catalog-model/examples/acme/org.yaml
+    #   rules:
+    #     - allow: [User, Group]
     - type: file
       target: ../../examples/org.yaml
       rules:
@@ -64,6 +90,7 @@ kubernetes:
           skipMetricsLookup: false
           serviceAccountToken: ${K8S_MINIKUBE_TOKEN}
 auth:
+  # omitIdentityTokenOwnershipClaim: true
   environment: development
   session:
     secret: ${AUTH_SESSION_SECRET}
@@ -74,4 +101,3 @@ auth:
         clientSecret: ${KC_CLIENT_SECRET}
         metadataUrl: ${KC_URL_CONFIG}
         prompt: auto
-        

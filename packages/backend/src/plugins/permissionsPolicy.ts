@@ -11,10 +11,19 @@ import {
 } from '@backstage/plugin-permission-node';
 import { policyExtensionPoint } from '@backstage/plugin-permission-node/alpha';
 
+// catalog
 import {
+  catalogEntityCreatePermission,
   catalogEntityDeletePermission,
   catalogEntityReadPermission,
+  catalogPermissions,
 } from '@backstage/plugin-catalog-common/alpha';
+import {
+  catalogConditions,
+  createCatalogConditionalDecision,
+} from '@backstage/plugin-catalog-backend/alpha';
+
+// scaffolder
 import {
   taskCancelPermission,
   taskCreatePermission,
@@ -33,57 +42,82 @@ class CustomPermissionPolicy implements PermissionPolicy {
     user?: PolicyQueryUser,
   ): Promise<PolicyDecision> {
     console.log('user-info', user?.info);
-    console.log('request-permission', request.permission);
+    console.log('request', request);
+    // const isVIP = user?.info.startsWith('user:default/vvip'');
 
-    // create scaffolder-template
+    /* =========================== scaffolder-template ====================== */
+    // create task
     if (isPermission(request.permission, taskCreatePermission)) {
-      if (user?.info.userEntityRef === 'user:default/kongdev') {
+      if (user?.info.userEntityRef === 'user:default/vvip') {
         return {
           result: AuthorizeResult.ALLOW,
         };
       }
     }
-
-    // read scaffolder-template resp
+    // read task response
     if (isPermission(request.permission, taskReadPermission)) {
-      if (user?.info.userEntityRef === 'user:default/kongdev') {
+      if (user?.info.userEntityRef === 'user:default/vvip') {
         console.log('taskReadPermission', taskReadPermission);
         return {
           result: AuthorizeResult.ALLOW,
         };
       }
     }
-    // read scaffolder-template StepRead
-    if (isPermission(request.permission, templateStepReadPermission)) {
-      if (user?.info.userEntityRef === 'user:default/kongdev') {
-        return {
-          result: AuthorizeResult.ALLOW,
-        };
-      }
-    }
-    // read scaffolder-template ParameterRead
-    if (isPermission(request.permission, templateParameterReadPermission)) {
-      if (user?.info.userEntityRef === 'user:default/kongdev') {
-        return {
-          result: AuthorizeResult.ALLOW,
-        };
-      }
-    }
-
-    // cancel scaffolder-template
+    // cancel task
     if (isPermission(request.permission, taskCancelPermission)) {
-      if (user?.info.userEntityRef === 'user:default/kongdev') {
+      if (user?.info.userEntityRef === 'user:default/vvip') {
         return {
           result: AuthorizeResult.ALLOW,
         };
       }
     }
 
-    if (isPermission(request.permission, catalogEntityReadPermission)) {
-      console.log('createCatalogConditionalDecision');
+    // read  StepRead
+    if (isPermission(request.permission, templateStepReadPermission)) {
+      if (user?.info.userEntityRef === 'user:default/vvip') {
+        return {
+          result: AuthorizeResult.ALLOW,
+        };
+      }
+    }
+    // read ParameterRead
+    if (isPermission(request.permission, templateParameterReadPermission)) {
+      if (user?.info.userEntityRef === 'user:default/vvip') {
+        return {
+          result: AuthorizeResult.ALLOW,
+        };
+      }
     }
 
-    return { result: AuthorizeResult.ALLOW };
+    /* =========================== catalog-template ====================== */
+    // delete Entity
+    if (isPermission(request.permission, catalogEntityDeletePermission)) {
+      if (user?.info.userEntityRef === 'user:default/vvip') {
+        return {
+          result: AuthorizeResult.ALLOW,
+        };
+      }
+    }
+    // create Entity
+    if (isPermission(request.permission, catalogEntityCreatePermission)) {
+      if (user?.info.userEntityRef === 'user:default/vvip') {
+        return {
+          result: AuthorizeResult.ALLOW,
+        };
+      }
+    }
+    // read Entity
+    if (isPermission(request.permission, catalogEntityReadPermission)) {
+      if (user?.info.userEntityRef === 'user:default/vvip') {
+        return {
+          result: AuthorizeResult.ALLOW,
+        };
+      }
+    }
+
+    return {
+      result: AuthorizeResult.DENY,
+    };
   }
 }
 

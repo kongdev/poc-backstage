@@ -52,7 +52,7 @@ const myAuthProviderModule = createBackendModule({
               return ctx.issueToken({
                 claims: {
                   sub: userRef, // The user's own identity
-                  ent: [userRef, 'a', 'b', 'c'], // A list of identities that the user claims ownership through
+                  ent: [userRef], // A list of identities that the user claims ownership through
                 },
               });
             },
@@ -90,6 +90,9 @@ backend.add(import('@backstage/plugin-catalog-backend-module-logs'));
 backend.add(import('@backstage/plugin-permission-backend'));
 // See https://backstage.io/docs/permissions/getting-started for how to create your own permission policy
 backend.add(import('./plugins/permissionsPolicy'));
+backend.add(
+  import('@backstage-community/plugin-catalog-backend-module-keycloak'),
+);
 
 // search plugin
 backend.add(import('@backstage/plugin-search-backend'));
