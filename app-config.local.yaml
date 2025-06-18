@@ -41,14 +41,14 @@ catalog:
       target: ../../examples/template/template.yaml
       rules:
         - allow: [Template]
-    - type: file
-      target: ../../examples/template/exam1.yaml
-      rules:
-        - allow: [Template]
-    - type: file
-      target: ../../examples/template/exam2.yaml
-      rules:
-        - allow: [Template]
+    # - type: file
+    #   target: ../../examples/template/template1.yaml
+    #   rules:
+    #     - allow: [Template]
+    # - type: file
+    #   target: ../../examples/template/template2.yaml
+    #   rules:
+    #     - allow: [Template]
     # Local example User Group
     - type: file
       target: ../../examples/group.yaml
@@ -64,10 +64,10 @@ catalog:
     #   target: https://github.com/kongdev/poc-software-templates/blob/main/github-pages-site/template.yaml
     #   rules:
     #     - allow: [Template]
-    # - type: url
-    #   target: https://github.com/backstage/software-templates/blob/main/scaffolder-templates/react-ssr-template/template.yaml
-    #   rules:
-    #     - allow: [Template]
+    - type: url
+      target: https://github.com/backstage/software-templates/blob/main/scaffolder-templates/react-ssr-template/template.yaml
+      rules:
+        - allow: [Template]
     # Local example organizational data
     # - type: url
     #   target: https://github.com/backstage/backstage/blob/master/packages/catalog-model/examples/acme/org.yaml

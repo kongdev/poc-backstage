@@ -2,27 +2,55 @@ apiVersion: scaffolder.backstage.io/v1beta3
 # https://backstage.io/docs/features/software-catalog/descriptor-format#kind-template
 kind: Template
 metadata:
-  name: example-nodejs-template
-  title: Example Node.js Template
+  name: nodejs-template
+  title: Node.js Template
   description: An example template for the scaffolder that creates a simple Node.js service
 spec:
-  owner: user:guest
   type: service
 
   # These parameters are used to generate the input form in the frontend, and are
   # used to gather input data for the execution of the template.
   parameters:
-    - title: Fill in some steps
+    - title: Provide some simple information
       required:
-        - name
+        - component_id
+        - owner
       properties:
-        name:
+        component_id:
           title: Name
           type: string
           description: Unique name of the component
-          ui:autofocus: true
+          ui:field: EntityNamePicker
+        description:
+          title: Description
+          type: string
+          description: Help others understand what this website is for.
+        owner:
+          title: Owner
+          type: string
+          description: Owner of the component
+          ui:field: OwnerPicker
           ui:options:
-            rows: 5
+            allowedKinds:
+              - Group
+        k8s_namespace:
+          title: k8s namespace
+          type: string
+          description: k8s namespace
+          default: default
+          enum:
+            - default
+            - dev
+            - pd1
+            - production
+            - test
+          enumNames:
+            - "default"
+            - "dev"
+            - "pd1"
+            - "production"
+            - "test"
+
     - title: Choose a location
       required:
         - repoUrl
@@ -39,13 +67,17 @@ spec:
   # via the parameters above.
   steps:
     # Each step executes an action, in this case one templates files into the working directory.
-    - id: fetch-base
+    - id: template
       name: Fetch Base
       action: fetch:template
       input:
         url: ./content
         values:
-          name: ${{ parameters.name }}
+          component_id: ${{ parameters.component_id }}
+          description: ${{ parameters.description }}
+          destination: ${{ parameters.repoUrl | parseRepoUrl }}
+          owner: ${{ parameters.owner }}
+          k8s_namespace: ${{ parameters.k8s_namespace }}
 
     # This step publishes the contents of the working directory to GitHub.
     - id: publish
@@ -53,7 +85,7 @@ spec:
       action: publish:github
       input:
         allowedHosts: ["github.com"]
-        description: This is ${{ parameters.name }}
+        description: This is ${{ parameters.component_id }}
         repoUrl: ${{ parameters.repoUrl }}
 
     # The final step is to register our new component in the catalog.
