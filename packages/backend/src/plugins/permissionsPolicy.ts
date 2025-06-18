@@ -3,6 +3,7 @@ import {
   PolicyDecision,
   AuthorizeResult,
   isPermission,
+  isResourcePermission,
 } from '@backstage/plugin-permission-common';
 import {
   PermissionPolicy,
@@ -16,11 +17,16 @@ import {
   catalogEntityCreatePermission,
   catalogEntityDeletePermission,
   catalogEntityReadPermission,
+  catalogLocationReadPermission,
+  catalogLocationCreatePermission,
+  catalogLocationAnalyzePermission,
+  catalogLocationDeletePermission,
   catalogPermissions,
 } from '@backstage/plugin-catalog-common/alpha';
 import {
   catalogConditions,
   createCatalogConditionalDecision,
+  createCatalogPermissionRule,
 } from '@backstage/plugin-catalog-backend/alpha';
 
 // scaffolder
@@ -30,10 +36,13 @@ import {
   taskReadPermission,
   templateStepReadPermission,
   templateParameterReadPermission,
+  scaffolderTemplatePermissions,
+  scaffolderActionPermissions,
+  scaffolderTaskPermissions,
 } from '@backstage/plugin-scaffolder-common/alpha';
 import {
-  createScaffolderActionConditionalDecision,
   scaffolderActionConditions,
+  createScaffolderActionConditionalDecision,
 } from '@backstage/plugin-scaffolder-backend/alpha';
 
 class CustomPermissionPolicy implements PermissionPolicy {
@@ -45,78 +54,116 @@ class CustomPermissionPolicy implements PermissionPolicy {
     console.log('request', request);
     // const isVIP = user?.info.startsWith('user:default/vvip'');
 
+    // const { action } = request.permission.attributes;
+    // console.log('action---->', action);
+
     /* =========================== scaffolder-template ====================== */
-    // create task
-    if (isPermission(request.permission, taskCreatePermission)) {
-      if (user?.info.userEntityRef === 'user:default/vvip') {
-        return {
-          result: AuthorizeResult.ALLOW,
-        };
-      }
-    }
-    // read task response
-    if (isPermission(request.permission, taskReadPermission)) {
-      if (user?.info.userEntityRef === 'user:default/vvip') {
-        console.log('taskReadPermission', taskReadPermission);
-        return {
-          result: AuthorizeResult.ALLOW,
-        };
-      }
-    }
-    // cancel task
-    if (isPermission(request.permission, taskCancelPermission)) {
-      if (user?.info.userEntityRef === 'user:default/vvip') {
-        return {
-          result: AuthorizeResult.ALLOW,
-        };
-      }
-    }
+    // scaffolder.action.execute
+    // if (request.permission.name === 'scaffolder.action.execute') {
+    //   if (user?.info.userEntityRef === 'user:default/vvip') {
+    //     return {
+    //       result: AuthorizeResult.ALLOW,
+    //     };
+    //   }
+    // }
 
-    // read  StepRead
-    if (isPermission(request.permission, templateStepReadPermission)) {
-      if (user?.info.userEntityRef === 'user:default/vvip') {
-        return {
-          result: AuthorizeResult.ALLOW,
-        };
-      }
-    }
-    // read ParameterRead
-    if (isPermission(request.permission, templateParameterReadPermission)) {
-      if (user?.info.userEntityRef === 'user:default/vvip') {
-        return {
-          result: AuthorizeResult.ALLOW,
-        };
-      }
-    }
+    // // create task
+    // if (isPermission(request.permission, taskCreatePermission)) {
+    //   if (user?.info.userEntityRef === 'user:default/vvip') {
+    //     return {
+    //       result: AuthorizeResult.ALLOW,
+    //     };
+    //   }
+    // }
+    // // read task response
+    // if (isPermission(request.permission, taskReadPermission)) {
+    //   if (user?.info.userEntityRef === 'user:default/vvip') {
+    //     console.log('taskReadPermission', taskReadPermission);
+    //     return {
+    //       result: AuthorizeResult.ALLOW,
+    //     };
+    //   }
+    // }
+    // // cancel task
+    // if (isPermission(request.permission, taskCancelPermission)) {
+    //   if (user?.info.userEntityRef === 'user:default/vvip') {
+    //     return {
+    //       result: AuthorizeResult.ALLOW,
+    //     };
+    //   }
+    // }
 
-    /* =========================== catalog-template ====================== */
-    // delete Entity
-    if (isPermission(request.permission, catalogEntityDeletePermission)) {
-      if (user?.info.userEntityRef === 'user:default/vvip') {
-        return {
-          result: AuthorizeResult.ALLOW,
-        };
-      }
-    }
-    // create Entity
-    if (isPermission(request.permission, catalogEntityCreatePermission)) {
-      if (user?.info.userEntityRef === 'user:default/vvip') {
-        return {
-          result: AuthorizeResult.ALLOW,
-        };
-      }
-    }
-    // read Entity
-    if (isPermission(request.permission, catalogEntityReadPermission)) {
-      if (user?.info.userEntityRef === 'user:default/vvip') {
-        return {
-          result: AuthorizeResult.ALLOW,
-        };
-      }
-    }
+    // // read  StepRead
+    // if (isPermission(request.permission, templateStepReadPermission)) {
+    //   if (user?.info.userEntityRef === 'user:default/vvip') {
+    //     return {
+    //       result: AuthorizeResult.ALLOW,
+    //     };
+    //   }
+    // }
+    // // read ParameterRead
+    // if (isPermission(request.permission, templateParameterReadPermission)) {
+    //   if (user?.info.userEntityRef === 'user:default/vvip') {
+    //     return {
+    //       result: AuthorizeResult.ALLOW,
+    //     };
+    //   }
+    // }
 
+    // /* =========================== catalog-template ====================== */
+
+    // // catalogLocationCreatePermission
+    // if (isPermission(request.permission, catalogLocationCreatePermission)) {
+    //   if (user?.info.userEntityRef === 'user:default/vvip') {
+    //     return {
+    //       result: AuthorizeResult.ALLOW,
+    //     };
+    //   }
+    // }
+    // // catalogLocationAnalyzePermission
+    // if (isPermission(request.permission, catalogLocationAnalyzePermission)) {
+    //   if (user?.info.userEntityRef === 'user:default/vvip') {
+    //     return {
+    //       result: AuthorizeResult.ALLOW,
+    //     };
+    //   }
+    // }
+
+    // // delete Entity
+    // if (isPermission(request.permission, catalogEntityDeletePermission)) {
+    //   if (user?.info.userEntityRef === 'user:default/vvip') {
+    //     return {
+    //       result: AuthorizeResult.DENY,
+    //     };
+    //   }
+    // }
+    // // create Entity
+    // if (isPermission(request.permission, catalogEntityCreatePermission)) {
+    //   if (user?.info.userEntityRef === 'user:default/vvip') {
+    //     return {
+    //       result: AuthorizeResult.ALLOW,
+    //     };
+    //   }
+    // }
+
+    // // read Entity
+    // if (isPermission(request.permission, catalogEntityReadPermission)) {
+    //   if (user?.info.userEntityRef === 'user:default/vvip') {
+    //     return {
+    //       result: AuthorizeResult.ALLOW,
+    //     };
+    //   }
+    //   // return createCatalogConditionalDecision(
+    //   //   request.permission,
+    //   //   catalogConditions.isEntityOwner({
+    //   //     claims: user?.info.ownershipEntityRefs ?? [],
+    //   //   }),
+    //   // );
+    // }
+
+    //  default
     return {
-      result: AuthorizeResult.DENY,
+      result: AuthorizeResult.ALLOW,
     };
   }
 }

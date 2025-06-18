@@ -8,12 +8,26 @@ metadata:
 spec:
   type: team
   profile:
-    displayName: kongdev Team 55555
+    displayName: Team dev 888
     email: dev@team.com
   children: [] # ถ้ามี subgroup ให้ใส่ชื่อที่นี่
   members:
-    - user:default/kongdev
-    - user:default/vvip
+    - user:default/vvip # คนในกลุ่ม
+---
+apiVersion: backstage.io/v1alpha1
+kind: Group
+metadata:
+  name: infra
+  description: The infra group
+  namespace: default
+spec:
+  type: team
+  profile:
+    displayName: Team infra 888
+    email: infra@team.com
+  children: [] # ถ้ามี subgroup ให้ใส่ชื่อที่นี่
+  members:
+    - user:default/kongdev # คนในกลุ่ม
 ---
 apiVersion: backstage.io/v1alpha1
 kind: User
@@ -25,7 +39,7 @@ spec:
     displayName: kong dev
     email: vasin.nopaket@kingpower.com
   memberOf:
-    - group:default/dev
+    - group:default/infra
   annotations:
     backstage.io/managed-by-origin: keycloak
     backstage.io/user-email: vasin.nopaket@kingpower.com
