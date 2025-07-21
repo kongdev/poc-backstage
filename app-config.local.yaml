@@ -106,7 +106,6 @@ permission:
       - catalog
       - scaffolder
       - permission
-      - techdocs
       - kubernetes
     policies-csv-file: ../../rbac-policy.csv
     policyFileReload: true
