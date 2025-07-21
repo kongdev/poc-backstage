@@ -1,5 +1,5 @@
-# macOS
-.DS_Store
+# Node modules
+node_modules/
 
 # Logs
 logs
@@ -7,48 +7,47 @@ logs
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-lerna-debug.log*
 
-# Coverage directory generated when running tests with coverage
-coverage
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
 
-# Dependencies
-node_modules/
+# Environment files
+.env
+.env.*
 
-# Yarn files
-.pnp.*
+# Build directories
+dist/
+build/
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# IDEs and editors
+.vscode/
+.idea/
+
+# Coverage reports
+coverage/
+
+# TypeScript
+*.tsbuildinfo
+
+# Optional npm cache directory
+.npm/
+
+# Optional eslint cache
+.eslintcache
+
+# Yarn 2+
 .yarn/*
 !.yarn/patches
 !.yarn/plugins
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
-
-# Node version directives
-.nvmrc
-
-# dotenv environment variables file
-.env
-.env.test
-
-# Build output
-dist
-dist-types
-
-# Temporary change files created by Vim
-*.swp
-
-# MkDocs build output
-site
-
-# Local configuration files
-# *.local.yaml
-
-# Sensitive credentials
-*-credentials.yaml
-
-# vscode database functionality support files
-*.session.sql
-
-# E2E test reports
-e2e-test-report/
+.yarn/install-state.gz
+.pnp.*
