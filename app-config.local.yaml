@@ -4,9 +4,6 @@ app:
 organization:
   name: My yyyy
 
-permission:
-  enabled: true
-
 backend:
   # This is for local development only, it is not recommended to use this in production
   # The production database configuration is stored in app-config.production.yaml
@@ -73,10 +70,10 @@ catalog:
     #   target: https://github.com/backstage/backstage/blob/master/packages/catalog-model/examples/acme/org.yaml
     #   rules:
     #     - allow: [User, Group]
-    - type: file
-      target: ../../examples/org.yaml
-      rules:
-        - allow: [User, Group]
+    # - type: file
+    #   target: ../../examples/group.yaml
+    #   rules:
+    #     - allow: [User, Group]
 kubernetes:
   serviceLocatorMethod:
     type: multiTenant
@@ -101,3 +98,22 @@ auth:
         clientSecret: ${KC_CLIENT_SECRET}
         metadataUrl: ${KC_URL_CONFIG}
         prompt: auto
+# RBAC configuration
+permission:
+  enabled: true
+  rbac:
+    pluginsWithPermission:
+      - catalog
+      - scaffolder
+      - permission
+      - techdocs
+      - kubernetes
+    policies-csv-file: ../../rbac-policy.csv
+    policyFileReload: true
+    admin:
+      users:
+        - name: user:user:default/vvip
+        - name: group:default/dev
+      superUsers:
+        - name: user:user:default/vvip
+        - name: group:default/dev

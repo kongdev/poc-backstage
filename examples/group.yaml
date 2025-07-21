@@ -2,6 +2,22 @@
 apiVersion: backstage.io/v1alpha1
 kind: Group
 metadata:
+  name: admin
+  description: The admin group
+  namespace: default
+spec:
+  type: team
+  profile:
+    displayName: Admin Team
+    email: admin@team.com
+  children: []
+  members:
+    - user:default/kongdev
+    - user:default/vvip
+---
+apiVersion: backstage.io/v1alpha1
+kind: Group
+metadata:
   name: dev
   description: The developer group
   namespace: default
@@ -40,6 +56,7 @@ spec:
     email: vasin.nopaket@kingpower.com
   memberOf:
     - group:default/infra
+    - group:default/admin
   annotations:
     backstage.io/managed-by-origin: keycloak
     backstage.io/user-email: vasin.nopaket@kingpower.com
@@ -56,6 +73,7 @@ spec:
     email: vvip@kingpower.com
   memberOf:
     - group:default/dev
+    - group:default/admin
   annotations:
     backstage.io/managed-by-origin: keycloak
     backstage.io/user-email: vvip@kingpower.com

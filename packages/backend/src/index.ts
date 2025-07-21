@@ -33,8 +33,9 @@ backend.add(import('@backstage/plugin-catalog-backend-module-logs'));
 
 // permission plugin
 backend.add(import('@backstage/plugin-permission-backend'));
-// See https://backstage.io/docs/permissions/getting-started for how to create your own permission policy
-backend.add(import('./plugins/permissionsPolicy'));
+
+// rbac plugin
+backend.add(import('@backstage-community/plugin-rbac-backend'));
 backend.add(
   import('@backstage-community/plugin-catalog-backend-module-keycloak'),
 );
@@ -55,4 +56,6 @@ backend.add(import('@backstage/plugin-kubernetes-backend'));
 
 // auth OIDC
 backend.add(import('./plugins/auth'));
+// permission custom
+// backend.add(import('./plugins/permissionsPolicy'));
 backend.start();
