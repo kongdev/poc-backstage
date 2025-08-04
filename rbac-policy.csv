@@ -10,6 +10,7 @@ p,role:default/team_b,catalog.location.read,read,allow
 p,role:default/team_b,catalog.location.create,create,allow
 p,role:default/team_b,catalog.location.delete,delete,allow
 p,role:default/team_b,catalog,read,allow
+p,role:default/team_b,catalog.location.analyze,use,allow
 
 p,role:default/team_b,scaffolder-template, read,allow
 p,role:default/team_b,scaffolder.action.execute, read,allow
@@ -36,36 +37,11 @@ p,role:default/team_b,rbac.policy.create,use,allow
 p,role:default/team_b,rbac.policy.update,use,allow
 p,role:default/team_b,rbac.policy.delete,use,allow
 
-p,role:default/team_a,api-docs,read,allow
-p,role:default/team_a,techdocs,read,allow
-p,role:default/team_a,search,read,allow
-
 p,role:default/team_b,kubernetes.clusters.read,read,allow
 p,role:default/team_b,kubernetes.resources.read,read,allow
 
 # Team A permissions
-p,role:default/team_a,catalog-entity,read,allow
-p,role:default/team_a,catalog-entity,create,allow
-p,role:default/team_a,catalog-entity,update,allow
-p,role:default/team_a,catalog-entity,delete,allow
-p,role:default/team_a,catalog.entity.create,create,allow
-p,role:default/team_a,catalog.entity.update,update,allow
-p,role:default/team_a,catalog.entity.delete,delete,allow
-p,role:default/team_a,catalog.location.read,read,allow
-p,role:default/team_a,catalog.location.create,create,allow
-p,role:default/team_a,catalog.location.delete,delete,allow
-p,role:default/team_a,catalog,read,allow
 
-p,role:default/team_b,scaffolder-template, read,allow
-p,role:default/team_b,scaffolder-action, use,allow
-p,role:default/team_b,scaffolder.task.read, use,allow
-p,role:default/team_b,scaffolder.task.create, use,allow
-p,role:default/team_b,scaffolder.task.cancel, use,allow
-
-p,role:default/team_a,api-docs,read,allow
-p,role:default/team_a,techdocs,read,allow
-p,role:default/team_a,search,read,allow
 
 # User assignments
-g,user:default/vvip,role:default/team_b
 g,group:default/dev,role:default/team_b
