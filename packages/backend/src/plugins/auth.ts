@@ -35,16 +35,22 @@ export default createBackendModule({
                 namespace: DEFAULT_NAMESPACE,
               });
 
+              console.log('userEntityRef:', userEntityRef);
+
               const groups: string[] =
                 info?.result.fullProfile.userinfo?.userGroup || [];
-              console.log('userEntityRef:', userEntityRef);
+
               console.log('userGroup:', groups);
 
               // Map groups to ownership entity references
               const ownershipRefs: string[] = groups.map(
-                (g: string) =>
-                  `group:${DEFAULT_NAMESPACE}/${g.replace('/', '')}`,
+                (group: string) =>
+                  `group:${group.replace('/', '')}`,
               );
+              // const ownershipRefs: string[] = groups.map(
+              //   (g: string) =>
+              //     `group:${DEFAULT_NAMESPACE}/${g.replace('/', '')}`,
+              // );
               console.log('ownershipRefs : ', ownershipRefs);
               console.log('info', info?.result);
 
