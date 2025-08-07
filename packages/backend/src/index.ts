@@ -36,6 +36,8 @@ backend.add(import('@backstage/plugin-permission-backend'));
 
 // rbac plugin
 backend.add(import('@backstage-community/plugin-rbac-backend'));
+
+// keycloak integration
 backend.add(
   import('@backstage-community/plugin-catalog-backend-module-keycloak'),
 );
@@ -54,7 +56,10 @@ backend.add(import('@backstage/plugin-search-backend-module-techdocs'));
 // kubernetes
 backend.add(import('@backstage/plugin-kubernetes-backend'));
 
-// auth OIDC
+// custom catalog 
+backend.add(import('./plugins/catalog'));
+
+// custom auth OIDC
 backend.add(import('./plugins/auth'));
 // permission custom
 // backend.add(import('./plugins/permissionsPolicy'));

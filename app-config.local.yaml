@@ -23,6 +23,17 @@ integrations:
       # about setting up the GitHub integration here: https://backstage.io/docs/integrations/github/locations#configuration
       token: ${GITHUB_TOKEN}
 catalog:
+  providers:
+    keycloakOrg:
+      default:
+        baseUrl: ${KC_BASE_URL}
+        realm: ${KC_SYNC_REALM}
+        loginRealm: ${KC_LOGIN_REALM}
+        clientId: ${KC_LOGIN_CLIENT_ID}
+        clientSecret: ${KC_LOGIN_CLIENT_SECRET}
+        schedule:
+          frequency: { minutes: 2 }
+          timeout: { minutes: 5 }
   import:
     entityFilename: catalog-info.yaml
     pullRequestBranchName: backstage-integration
@@ -47,10 +58,10 @@ catalog:
     #   rules:
     #     - allow: [Template]
     # Local example User Group
-    - type: file
-      target: ../../examples/group.yaml
-      rules:
-        - allow: [User, Group]
+    # - type: file
+    #   target: ../../examples/group.yaml
+    #   rules:
+    #     - allow: [User, Group]
     # URL
     # - type: url
     #   target: https://github.com/backstage/backstage/blob/master/packages/catalog-model/examples/acme/backstage-group.yaml
@@ -65,15 +76,7 @@ catalog:
       target: https://github.com/backstage/software-templates/blob/main/scaffolder-templates/react-ssr-template/template.yaml
       rules:
         - allow: [Template]
-    # Local example organizational data
-    # - type: url
-    #   target: https://github.com/backstage/backstage/blob/master/packages/catalog-model/examples/acme/org.yaml
-    #   rules:
-    #     - allow: [User, Group]
-    # - type: file
-    #   target: ../../examples/group.yaml
-    #   rules:
-    #     - allow: [User, Group]
+
 kubernetes:
   serviceLocatorMethod:
     type: multiTenant
