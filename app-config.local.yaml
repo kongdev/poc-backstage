@@ -1,8 +1,8 @@
 app:
-  title: local Backstage 101
+  title: TheAble 888
 
 organization:
-  name: My yyyy
+  name: ok let go go go
 
 backend:
   # This is for local development only, it is not recommended to use this in production
@@ -32,7 +32,7 @@ catalog:
         clientId: ${KC_LOGIN_CLIENT_ID}
         clientSecret: ${KC_LOGIN_CLIENT_SECRET}
         schedule:
-          frequency: { minutes: 2 }
+          frequency: { seconds: 10 }
           timeout: { minutes: 5 }
   import:
     entityFilename: catalog-info.yaml
