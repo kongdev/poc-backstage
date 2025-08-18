@@ -6,7 +6,14 @@
  * Happy hacking!
  */
 
+import dotenv from 'dotenv';
+
 import { createBackend } from '@backstage/backend-defaults';
+
+// Load environment variables
+dotenv.config({ path: '../../.env.local' });
+
+
 
 const backend = createBackend();
 
